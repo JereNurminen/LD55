@@ -37,7 +37,6 @@ public class CrowController : MonoBehaviour
     }
 
     private void Despawn() {
-        movement = Vector2.zero;
         animator.SetTrigger("despawn");
         collider.enabled = false;   
     }

@@ -110,7 +110,9 @@ MonoBehaviour:
   targerLayers:
     serializedVersion: 2
     m_Bits: 896
+  hasHit: 0
   movement: {x: 0, y: 0}
+  maxLifeTime: 2
 --- !u!50 &2690522017117605624
 Rigidbody2D:
   serializedVersion: 4
@@ -199,6 +201,9 @@ MonoBehaviour:
   landSpeed: 20
   airSpeed: 0.5
   gravity: 0.5
+  flipLayers:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &4270598236982676721
 MonoBehaviour:
   m_ObjectHideFlags: 0

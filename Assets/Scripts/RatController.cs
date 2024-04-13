@@ -8,6 +8,7 @@ public class RatController : MonoBehaviour
     public float landSpeed = 1.0f;
     public float airSpeed = 0.5f;
     public float gravity = 0.5f;
+    public LayerMask flipLayers;
 
     private bool isGrounded = false;
     private Vector2 velocity = Vector2.zero;
@@ -61,6 +62,10 @@ public class RatController : MonoBehaviour
                 horizontalHit.Value.collider.gameObject,
                 horizontalHit.Value.point
             );
+            if (flipLayers == (flipLayers | (1 << horizontalHit.Value.collider.gameObject.layer)))
+            {
+                summonController.movement.x *= -1;
+            }
         }
         if (summonController.movement.x > 0)
         {

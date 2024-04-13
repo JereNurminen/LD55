@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee435028257bf4acba642b32c63ea3cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 12
+  speed: 11
   gravity: 9.8
   groundRaycastDistance: 0.0625
   visionBlockingLayerMask:

@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
 
     void ApplyGravity() {
         if (!isGrounded && timeSinceJump > gravityImmunityAfterJump) {
-            velocity.y = -gravity * Time.deltaTime;
+            velocity.y -= gravity * Time.deltaTime;
         }
     }
 
@@ -93,8 +93,8 @@ public class PlayerController : MonoBehaviour
     }
 
     void FixedUpdate() {
-        CheckForGround();
         ApplyGravity();
         ApplyVelocity();
+        CheckForGround();
     }
 }

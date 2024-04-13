@@ -8,17 +8,23 @@ public class CameraController : MonoBehaviour
     public Vector3 offset;
     public float speed;
 
+    private Vector3 targetPosition;
+
     // Start is called before the first frame update
     void Start() { }
 
-    // Update is called once per frame
-    void LateUpdate()
+    void UpdateTargetPosition()
     {
-        transform.position =
-            new Vector3(
-                player.transform.position.x,
-                player.transform.position.y,
-                player.transform.position.z
-            ) + offset;
+        var flippedOffset = new Vector3(offset.x * player.transform.localScale.x, offset.y, -10);
+        targetPosition =
+            new Vector3(player.transform.position.x, player.transform.position.y, -10)
+            + flippedOffset;
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        UpdateTargetPosition();
+        transform.position = Vector3.Lerp(transform.position, targetPosition, speed);
     }
 }

@@ -152,8 +152,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  offset: {x: 4, y: 2, z: -1}
-  speed: 0
+  offset: {x: 4, y: 4, z: -1}
+  speed: 0.05
+  bossFightPosition: {x: 48.1, y: -47.8}
+  shouldFollowPlayer: 1
 --- !u!114 &2868965221144966729
 MonoBehaviour:
   m_ObjectHideFlags: 0

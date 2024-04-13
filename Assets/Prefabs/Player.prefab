@@ -80,7 +80,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 543317671
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 7815371044791450175, guid: 313ff99be65c34ead850cd6ab39637b4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravity: 20
   runSpeed: 10
-  jumpStrength: 7
+  jumpStrength: 12
   groundRaycastDistance: 0.0625
   wallRaycastDistance: 0.125
   groundRaycastCount: 2
@@ -188,9 +188,12 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 320
-  gravityImmunityAfterJump: 0.3
+  gravityImmunityAfterJump: 0.1
   crowPrefab: {fileID: 951377847551863843, guid: 9155ae4d9e35d41eb97a45b94139f2ac, type: 3}
   ratPrefab: {fileID: 7605179539267783929, guid: 253957595a8984dce8d046fcc1e3016e, type: 3}
+  deathSound: {fileID: 8300000, guid: 8c90d6f7f55fa45d2964e9329e129db6, type: 3}
+  crowSummonSound: {fileID: 8300000, guid: f529216629fbb4416b7a4d16bf6ff34f, type: 3}
+  ratSummonSound: {fileID: 8300000, guid: e8ad7c56b5c194fcc9b1f67c2e9389d9, type: 3}
   isAlive: 1
 --- !u!114 &8769702891177251215
 MonoBehaviour:
@@ -285,7 +288,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onDeathSound: {fileID: 8300000, guid: e100f2bd4e9b340ed9e527a230d3a74b, type: 3}
   onDamage:
     m_PersistentCalls:
       m_Calls: []
+  onDamageSound: {fileID: 8300000, guid: 55026f7dada8b47a1a8ac60cac5dec4f, type: 3}
   onDamageEffectPrefab: {fileID: 0}
+  isDead: 0
+  isInvulnerable: 0

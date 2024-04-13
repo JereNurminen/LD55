@@ -7,6 +7,8 @@ public class CameraController : MonoBehaviour
     public GameObject player;
     public Vector3 offset;
     public float speed;
+    public Vector2 bossFightPosition;
+    public bool shouldFollowPlayer = true;
 
     private Vector3 targetPosition;
 
@@ -21,10 +23,19 @@ public class CameraController : MonoBehaviour
             + flippedOffset;
     }
 
+    public void LockToArena()
+    {
+        shouldFollowPlayer = false;
+        targetPosition = new Vector3(bossFightPosition.x, bossFightPosition.y, -10);
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
-        UpdateTargetPosition();
+        if (shouldFollowPlayer)
+        {
+            UpdateTargetPosition();
+        }
         transform.position = Vector3.Lerp(transform.position, targetPosition, speed);
     }
 }

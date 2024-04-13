@@ -5,34 +5,61 @@ using UnityEngine;
 public class MouseController : MonoBehaviour
 {
 
+    public Texture2D cursorTexture;
+    public Vector2 cursorHotspot;
+    public CursorMode cursorMode = CursorMode.Auto;
+
+    public GameObject summoningCirclePrefab;
+    public GameObject summoningTargetPrefab;
+
     private bool isHeld = false;
 
-    private Vector2 currentWorldPosition; 
-    private Vector2 downWorldPosition;
+    private Vector2 targetWorldPosition; 
+    private Vector2 spawnWorldPosition;
+    private GameObject summoningCircle;
+    private GameObject cursor;
+    private Animator cursorAnimator;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        cursor = Instantiate(summoningTargetPrefab, Vector2.zero, Quaternion.identity);
+        cursorAnimator = cursor.GetComponent<Animator>();
+        Cursor.visible = false;
+    }
+
+    void OnMouseEnter() {
+        Cursor.SetCursor(cursorTexture, cursorHotspot, cursorMode);
+    }
+
+    void OnMouseExit() {
+        Cursor.SetCursor(null, Vector2.zero, cursorMode);
     }
 
     void SummonCrow() {
-        GetComponentInParent<PlayerController>().SummonCrow(downWorldPosition, currentWorldPosition);
+        GetComponentInParent<PlayerController>().SummonCrow(spawnWorldPosition, targetWorldPosition);
     }
 
     // Update is called once per frame
     void Update()
     {
+        targetWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        cursor.transform.position = targetWorldPosition;
+
         if (Input.GetMouseButtonDown(0)) {
             isHeld = true;
-            downWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            spawnWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            summoningCircle = Instantiate(summoningCirclePrefab, spawnWorldPosition, Quaternion.identity);
+            cursorAnimator.SetTrigger("activate");
         } else if (Input.GetMouseButtonUp(0)) {
             isHeld = false;
+            summoningCircle.GetComponent<SummoningController>().Despawn();
             SummonCrow();
+            cursorAnimator.SetTrigger("deactivate");
         }
 
         if (isHeld) {
-            currentWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Debug.DrawLine(downWorldPosition, currentWorldPosition, Color.red);
+            Debug.DrawLine(spawnWorldPosition, targetWorldPosition, Color.red);
         }
     }
 }

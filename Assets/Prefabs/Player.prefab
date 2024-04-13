@@ -179,10 +179,12 @@ MonoBehaviour:
   runSpeed: 10
   jumpStrength: 5
   groundRaycastDistance: 0.0625
+  wallRaycastDistance: 0.125
   groundRaycastCount: 2
+  wallRaycastCount: 3
   groundLayerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 320
   gravityImmunityAfterJump: 0.3
   crowPrefab: {fileID: 951377847551863843, guid: 9155ae4d9e35d41eb97a45b94139f2ac, type: 3}
 --- !u!114 &8769702891177251215
@@ -197,3 +199,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5a9414d235740a4a83a8030867d6e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cursorTexture: {fileID: 2800000, guid: b2d8faccf8e6f4ca5b5629497c0f18fd, type: 3}
+  cursorHotspot: {x: 5, y: 8}
+  cursorMode: 1
+  summoningCirclePrefab: {fileID: 0}
+  summoningTargetPrefab: {fileID: 0}

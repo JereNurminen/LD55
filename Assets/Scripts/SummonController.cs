@@ -18,6 +18,8 @@ public class SummonController : MonoBehaviour
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider;
     private CollisionDetection collisionDetection;
+    private float lifeTime = 0f;
+    public float maxLifeTime = 5f;
 
     // Start is called before the first frame update
     void Start()
@@ -82,5 +84,14 @@ public class SummonController : MonoBehaviour
     {
         ApplyGravity();
         rb.MovePosition(rb.position + movement * Time.deltaTime);
+    }
+
+    void Update()
+    {
+        lifeTime += Time.deltaTime;
+        if (lifeTime >= maxLifeTime)
+        {
+            OnHit();
+        }
     }
 }

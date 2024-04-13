@@ -43,6 +43,11 @@ public class CollisionDetection : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, raylength, groundLayerMask);
             if (hit.collider != null)
             {
+                var health = hit.collider.gameObject.GetComponent<Health>();
+                if (health != null && health.isDead)
+                {
+                    continue;
+                }
                 transform.position = new Vector2(
                     transform.position.x,
                     hit.point.y + boxCollider.bounds.size.y / 2 + groundRaycastDistance
@@ -71,7 +76,11 @@ public class CollisionDetection : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.up, raylength, groundLayerMask);
             if (hit.collider != null)
             {
-                //transform.position = new Vector2(transform.position.x, Mathf.Min(hit.point.y - boxCollider.bounds.size.y / 2 + groundRaycastDistance, transform.position.y));
+                var health = hit.collider.gameObject.GetComponent<Health>();
+                if (health != null && health.isDead)
+                {
+                    continue;
+                }
                 return hit;
             }
         }
@@ -106,6 +115,11 @@ public class CollisionDetection : MonoBehaviour
                 );
                 if (hit.collider != null)
                 {
+                    var health = hit.collider.gameObject.GetComponent<Health>();
+                    if (health != null && health.isDead)
+                    {
+                        continue;
+                    }
                     return hit;
                 }
             }
@@ -127,6 +141,11 @@ public class CollisionDetection : MonoBehaviour
                 );
                 if (hit.collider != null)
                 {
+                    var health = hit.collider.gameObject.GetComponent<Health>();
+                    if (health != null && health.isDead)
+                    {
+                        continue;
+                    }
                     return hit;
                 }
             }

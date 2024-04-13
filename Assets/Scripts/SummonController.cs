@@ -66,12 +66,17 @@ public class SummonController : MonoBehaviour
         if (targerLayers == (targerLayers | (1 << targetObject.layer)))
         {
             var health = targetObject.GetComponent<Health>();
-            OnHit();
 
             if (health != null)
             {
+                if (health.isDead)
+                {
+                    return;
+                }
                 health.TakeDamage(1, point);
             }
+
+            OnHit();
         }
     }
 

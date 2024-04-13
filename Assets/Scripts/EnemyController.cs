@@ -165,6 +165,12 @@ public class EnemyController : MonoBehaviour
             var direction = player.transform.position.x - transform.position.x > 0 ? 1 : -1;
             chargeDirection = direction;
             isCharging = true;
+            Debug.Log(
+                "Saw player at "
+                    + player.transform.position.x
+                    + " charging in direction "
+                    + chargeDirection
+            );
         }
         velocity.x = chargeDirection * speed;
     }
@@ -193,10 +199,9 @@ public class EnemyController : MonoBehaviour
         var ceilingHits = CheckForCeiling();
         if (isAlive)
         {
-            CanSeePlayer();
-
             if (CanSeePlayer() && playerController.isAlive)
             {
+                Debug.Log("Can see player");
                 ChargePlayer();
             }
 

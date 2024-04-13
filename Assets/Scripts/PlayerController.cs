@@ -186,6 +186,7 @@ public class PlayerController : MonoBehaviour
         animator.SetTrigger("death");
         velocity.x = 0;
         velocity.y = Mathf.Min(0, velocity.y);
+        StartCoroutine(hudController.Die());
     }
 
     // Update is called once per frame
@@ -194,6 +195,13 @@ public class PlayerController : MonoBehaviour
         if (isAlive)
         {
             HandleInputs();
+        }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            // Reload current Scene
+            UnityEngine.SceneManagement.SceneManager.LoadScene(
+                UnityEngine.SceneManagement.SceneManager.GetActiveScene().name
+            );
         }
         CheckForGround();
         CheckForWalls();

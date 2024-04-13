@@ -214,3 +214,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   damage: 1
+  gravity: 0
+  targerLayers:
+    serializedVersion: 2
+    m_Bits: 960
+  hasHit: 0
+  movement: {x: 0, y: 0}

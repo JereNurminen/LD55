@@ -209,7 +209,7 @@ public class EnemyController : MonoBehaviour
             {
                 if (hit != null && hit.Value.collider.gameObject.GetComponent<Health>() != null)
                 {
-                    hit.Value.collider.gameObject.GetComponent<Health>().TakeDamage(1);
+                    hit.Value.collider.gameObject.GetComponent<Health>().TakeDamage(3);
                 }
             });
         }

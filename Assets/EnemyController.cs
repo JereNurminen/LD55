@@ -57,7 +57,8 @@ public class EnemyController : MonoBehaviour
     }
 
     public void onDeath() {
-    animator.SetTrigger("die");
+        animator.SetTrigger("die");
+        
     }
 
     // Update is called once per frame

@@ -20,11 +20,13 @@ public class MouseController : MonoBehaviour
     private GameObject summoningCircle;
     private GameObject cursor;
     private Animator cursorAnimator;
+    private PlayerController playerController;
 
     // Start is called before the first frame update
     void Start()
     {
         cursor = Instantiate(summoningTargetPrefab, Vector2.zero, Quaternion.identity);
+        playerController = GetComponentInParent<PlayerController>();
         cursorAnimator = cursor.GetComponent<Animator>();
         Cursor.visible = false;
     }
@@ -36,7 +38,7 @@ public class MouseController : MonoBehaviour
 
     void OnMouseExit()
     {
-        Cursor.SetCursor(null, Vector2.zero, cursorMode);
+        //Cursor.SetCursor(null, Vector2.zero, cursorMode);
     }
 
     // Update is called once per frame
@@ -47,7 +49,7 @@ public class MouseController : MonoBehaviour
         isReadyToSummon =
             Vector2.Distance(spawnWorldPosition, targetWorldPosition) > minimumSummonDistance;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && playerController.isAlive)
         {
             isHeld = true;
             spawnWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

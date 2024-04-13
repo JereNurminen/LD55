@@ -52,6 +52,8 @@ public class PlayerController : MonoBehaviour
             } else {
                 velocity.x = 0;
             }
+        } else {
+            velocity.x = 0;
         }
 
         if (Input.GetKeyDown(KeyCode.Space)) {

@@ -249,6 +249,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onDamageEffectPrefab: {fileID: 6401547085967799255, guid: 0b7e78c34470f451e933429e54cd872a, type: 3}
 --- !u!95 &8692982416064020448
 Animator:
   serializedVersion: 7

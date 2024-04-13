@@ -24,19 +24,16 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded = false;
 
     private BoxCollider2D boxCollider;
-    private Rigidbody2D rigidBody;
     private Animator animator;
     private MouseController mouseController;
     private CollisionDetection collisionDetection;
     private float timeSinceJump = 0.0f;
-    
-
+    public bool isAlive = true;
 
     // Start is called before the first frame update
     void Start()
     {
         boxCollider = GetComponent<BoxCollider2D>();
-        rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         mouseController = GetComponent<MouseController>();
         collisionDetection = GetComponent<CollisionDetection>();
@@ -116,10 +113,17 @@ public class PlayerController : MonoBehaviour
         crow.GetComponent<CrowController>().Spawn(Start, Target);
     }
 
+    public void onDeath() {
+        isAlive = false;
+        animator.SetTrigger("death");
+    }
+
     // Update is called once per frame
     void Update()
     {
-        HandleInputs();
+        if (isAlive) {
+            HandleInputs();
+        }
         CheckForGround();
         CheckForWalls();
         CheckForCeiling();

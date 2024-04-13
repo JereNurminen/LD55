@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -24,6 +25,7 @@ public class EnemyController : MonoBehaviour
     private CollisionDetection collisionDetection;
     private Animator animator;
     private GameObject player;
+    private PlayerController playerController;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +34,7 @@ public class EnemyController : MonoBehaviour
         collisionDetection = GetComponent<CollisionDetection>();
         animator = GetComponent<Animator>();
         player = GameObject.Find("Player");
+        playerController = player.GetComponent<PlayerController>();
     }
 
     void ApplyGravity()
@@ -42,7 +45,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void CheckForGround()
+    RaycastHit2D? CheckForGround()
     {
         var hit = collisionDetection.CheckForGround();
         if (hit != null)
@@ -58,16 +61,32 @@ public class EnemyController : MonoBehaviour
         {
             isGrounded = false;
         }
+        return hit;
     }
 
-    void CheckForWalls()
+    RaycastHit2D? CheckForCeiling()
+    {
+        var hit = collisionDetection.CheckForCeiling();
+        if (hit != null)
+        {
+            velocity.y = 0;
+        }
+        return hit;
+    }
+
+    RaycastHit2D? CheckForWalls()
     {
         var hit = collisionDetection.CheckForWalls(velocity.x);
         if (hit != null)
         {
             velocity.x = 0;
+            var hitHealth = hit.Value.collider.gameObject.GetComponent<Health>();
+            if (isCharging && hitHealth != null) {
+                hitHealth.TakeDamage(1);
+            }
             StopCharging();
         }
+        return hit;
     }
 
     void ApplyVelocity()
@@ -86,20 +105,34 @@ public class EnemyController : MonoBehaviour
 
     private bool CanSeePlayer()
     {
-        RaycastHit2D hit = Physics2D.Raycast(
+        var playerBottom = player.GetComponent<BoxCollider2D>().bounds.min;
+        var playerTop = player.GetComponent<BoxCollider2D>().bounds.max;
+        RaycastHit2D bottomHit = Physics2D.Raycast(
             transform.position,
-            player.transform.position - transform.position,
+            playerBottom - transform.position,
             visionRange,
             visionBlockingLayerMask
         );
-        if (hit.collider != null)
-        {
-            if (hit.collider.gameObject.CompareTag("Player"))
+        RaycastHit2D topHit = Physics2D.Raycast(
+            transform.position,
+            playerTop - transform.position,
+            visionRange,
+            visionBlockingLayerMask
+        );
+
+        if (topHit.collider != null || bottomHit.collider != null) {
+            if (topHit.collider.gameObject.CompareTag("Player"))
             {
-                Debug.DrawLine(transform.position, player.transform.position, Color.red);
+                Debug.DrawLine(transform.position, playerTop, Color.red);
                 return true;
             }
-            Debug.DrawLine(transform.position, hit.point, Color.green);
+            if (bottomHit.collider.gameObject.CompareTag("Player"))
+            {
+                Debug.DrawLine(transform.position, playerBottom, Color.red);
+                return true;
+            }
+            Debug.DrawLine(transform.position, topHit.point, Color.green);
+            Debug.DrawLine(transform.position, bottomHit.point, Color.green);
             return false;
         }
         else
@@ -123,7 +156,6 @@ public class EnemyController : MonoBehaviour
     {
         if (!isCharging && timeSinceLastChargeEnd > chargeCooldown)
         {
-            Debug.Log("Charging");
             var direction = player.transform.position.x - transform.position.x > 0 ? 1 : -1;
             chargeDirection = direction;
             isCharging = true;
@@ -143,31 +175,36 @@ public class EnemyController : MonoBehaviour
     {
         StopCharging();
         timeSinceLastChargeEnd = chargeCooldown / 2;
-        //animator.SetTrigger("damage");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            collision.gameObject.GetComponent<Health>().TakeDamage(1);
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckForGround();
+        var groundHits = CheckForGround();
         if (isAlive)
         {
-            CheckForWalls();
+            var wallHits = CheckForWalls();
+            var ceilingHits = CheckForCeiling();
             CanSeePlayer();
 
-            if (CanSeePlayer())
+            if (CanSeePlayer() && playerController.isAlive)
             {
                 ChargePlayer();
             }
+
+            new List<RaycastHit2D?> { groundHits, wallHits, ceilingHits }.ForEach(hit =>
+            {
+                if (hit != null && hit.Value.collider.gameObject.GetComponent<Health>() != null) 
+                {
+                    hit.Value.collider.gameObject.GetComponent<Health>().TakeDamage(1);
+                }
+            });
         }
+        animator.SetBool("is_charging", isCharging);
         timeSinceLastChargeEnd += Time.deltaTime;
     }
 

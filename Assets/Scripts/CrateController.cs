@@ -6,14 +6,14 @@ using UnityEngine.UIElements;
 public class CrateController : MonoBehaviour
 {
     private Animator animator;
-    private BoxCollider2D collider;
-    private Rigidbody2D rigidbody;
+    private BoxCollider2D boxCollider;
+    private Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
-        collider = GetComponent<BoxCollider2D>();   
-        rigidbody = GetComponent<Rigidbody2D>();
+        boxCollider = GetComponent<BoxCollider2D>();   
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -28,6 +28,6 @@ public class CrateController : MonoBehaviour
 
     public void Break() {
         animator.SetTrigger("break");
-        rigidbody.isKinematic = true;
+        rb.bodyType = RigidbodyType2D.Static;
     }
 }

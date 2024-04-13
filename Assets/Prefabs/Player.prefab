@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 8769702891177251215}
   - component: {fileID: 5312584364504923604}
   - component: {fileID: 8468787846369807125}
+  - component: {fileID: 3685472393469550395}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -251,3 +252,35 @@ MonoBehaviour:
   upRaycastCount: 2
   horizontalRaycastCount: 2
   wallRaycastDistance: 0.0625
+--- !u!114 &3685472393469550395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4256530181546688879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14d5bab90f8af41ac8dfea085a732e14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitPoints: 1
+  onDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6928567499285947123}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: onDeath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  onDamageEffectPrefab: {fileID: 0}

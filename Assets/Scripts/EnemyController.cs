@@ -27,6 +27,8 @@ public class EnemyController : MonoBehaviour
     private PlayerController playerController;
     private Rigidbody2D rb;
     private Health health;
+    private SpriteRenderer spriteRenderer;
+    private bool hasSeenPlayer = false;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +40,7 @@ public class EnemyController : MonoBehaviour
         playerController = player.GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody2D>();
         health = GetComponent<Health>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void ApplyGravity()
@@ -108,6 +111,11 @@ public class EnemyController : MonoBehaviour
 
     private bool CanSeePlayer()
     {
+        // If player can't see the monster, the monster doesn't see the player
+        if (!hasSeenPlayer && !spriteRenderer.isVisible)
+        {
+            return false;
+        }
         var playerBottom = player.GetComponent<BoxCollider2D>().bounds.min;
         var playerTop = player.GetComponent<BoxCollider2D>().bounds.max;
         RaycastHit2D bottomHit = Physics2D.Raycast(
@@ -208,8 +216,8 @@ public class EnemyController : MonoBehaviour
         {
             if (CanSeePlayer() && playerController.isAlive)
             {
-                Debug.Log("Can see player");
                 ChargePlayer();
+                hasSeenPlayer = true;
             }
 
             new List<RaycastHit2D?> { groundHits, wallHits, ceilingHits }.ForEach(hit =>

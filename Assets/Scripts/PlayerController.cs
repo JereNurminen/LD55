@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
 
     private BoxCollider2D boxCollider;
     private Rigidbody2D rigidBody;
+    private Animator animator;
+    private MouseController mouseController;
     private float timeSinceJump = 0.0f;
     
 
@@ -34,18 +36,22 @@ public class PlayerController : MonoBehaviour
     {
         boxCollider = GetComponent<BoxCollider2D>();
         rigidBody = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        mouseController = GetComponent<MouseController>();
     }
 
     /* Handle Inputs */
     void HandleInputs() {
-        if (Input.GetKey(KeyCode.A)) {
-            Debug.Log("A key is pressed");
-            velocity.x = -runSpeed;
-        } else if (Input.GetKey(KeyCode.D)) {
-            Debug.Log("D key is pressed");
-            velocity.x = runSpeed;
-        } else {
-            velocity.x = 0;
+        if (!mouseController.isHeld) {
+            if (Input.GetKey(KeyCode.A)) {
+                Debug.Log("A key is pressed");
+                velocity.x = -runSpeed;
+            } else if (Input.GetKey(KeyCode.D)) {
+                Debug.Log("D key is pressed");
+                velocity.x = runSpeed;
+            } else {
+                velocity.x = 0;
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Space)) {
@@ -57,6 +63,7 @@ public class PlayerController : MonoBehaviour
         if (isGrounded) {
             velocity.y = jumpStrength;
             timeSinceJump = 0.0f;
+            animator.SetTrigger("jump");
         }
     }
 
@@ -118,6 +125,11 @@ public class PlayerController : MonoBehaviour
     void ApplyVelocity() {
         // Apply the velocity to the player
         transform.Translate(velocity * Time.deltaTime);
+        if (velocity.x < 0) {
+            transform.localScale = new Vector2(-1, 1);
+        } else if (velocity.x > 0) {
+            transform.localScale = new Vector2(1, 1);
+        }
     }
 
     public void SummonCrow(Vector2 Start, Vector2 Target) {
@@ -131,6 +143,10 @@ public class PlayerController : MonoBehaviour
         HandleInputs();
         CheckForGround();
         CheckForWalls();
+        animator.SetBool("running", !Mathf.Approximately(velocity.x, 0f));
+        animator.SetFloat("vertical_speed", velocity.y);
+        animator.SetBool("grounded", isGrounded);
+        animator.SetBool("summoning", mouseController.isHeld);
     }
 
     void FixedUpdate() {

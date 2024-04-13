@@ -14,7 +14,7 @@ public class MouseController : MonoBehaviour
     public GameObject summoningCirclePrefab;
     public GameObject summoningTargetPrefab;
 
-    private bool isHeld = false;
+    public bool isHeld = false;
 
     private Vector2 targetWorldPosition; 
     private Vector2 spawnWorldPosition;

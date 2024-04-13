@@ -9,14 +9,16 @@ public class CameraController : MonoBehaviour
     public float speed;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    void Start() { }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        transform.position = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z) + offset;
+        transform.position =
+            new Vector3(
+                player.transform.position.x,
+                player.transform.position.y,
+                player.transform.position.z
+            ) + offset;
     }
 }

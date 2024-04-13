@@ -207,8 +207,8 @@ MonoBehaviour:
   visionBlockingLayerMask:
     serializedVersion: 2
     m_Bits: 448
-  visionRange: 10
-  chargeCooldown: 2
+  visionRange: 20
+  chargeCooldown: 1
 --- !u!114 &2811063839400123458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,6 +253,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   onDamageEffectPrefab: {fileID: 6401547085967799255, guid: 0b7e78c34470f451e933429e54cd872a, type: 3}
+  isDead: 0
 --- !u!95 &8692982416064020448
 Animator:
   serializedVersion: 7

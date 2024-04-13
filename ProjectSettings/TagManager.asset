@@ -50,6 +50,9 @@ TagManager:
   - name: Level
     uniqueID: 4028733077
     locked: 0
+  - name: BackgroundEffects
+    uniqueID: 3564529571
+    locked: 0
   - name: Player
     uniqueID: 543317671
     locked: 0

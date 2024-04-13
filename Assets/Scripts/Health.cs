@@ -11,25 +11,33 @@ public class Health : MonoBehaviour
     public UnityEvent onDamage;
     public GameObject onDamageEffectPrefab;
     public bool isDead = false;
+    public bool isInvulnerable = false;
 
     // Start is called before the first frame update
     void Start() { }
 
     public void TakeDamage(int damage, Vector2? hitPosition = null)
     {
-        hitPoints -= damage;
-        onDamage.Invoke();
-        if (hitPoints <= 0 && !isDead)
+        if (!isInvulnerable)
         {
-            onDeath.Invoke();
-            isDead = true;
-        }
-        else
-        {
+            SetHealth(hitPoints - damage);
             if (onDamageEffectPrefab != null && hitPosition != null)
             {
                 Instantiate(onDamageEffectPrefab, (Vector2)hitPosition, Quaternion.identity);
             }
+        }
+
+        onDamage.Invoke();
+    }
+
+    public void SetHealth(int health)
+    {
+        hitPoints = health;
+
+        if (hitPoints <= 0 && !isDead)
+        {
+            onDeath.Invoke();
+            isDead = true;
         }
     }
 

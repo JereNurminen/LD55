@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     private SelectedSummon selectedSummon = SelectedSummon.Crow;
     private HudController hudController;
     private Vector2 lastPos;
+    private BossController bossController;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +50,7 @@ public class PlayerController : MonoBehaviour
         mouseController = GetComponent<MouseController>();
         collisionDetection = GetComponent<CollisionDetection>();
         hudController = FindAnyObjectByType<HudController>();
+        bossController = FindAnyObjectByType<BossController>();
     }
 
     /* Handle Inputs */
@@ -208,6 +210,7 @@ public class PlayerController : MonoBehaviour
         velocity.x = 0;
         velocity.y = Mathf.Min(0, velocity.y);
         StartCoroutine(hudController.Die());
+        bossController.PowerDown();
     }
 
     // Update is called once per frame

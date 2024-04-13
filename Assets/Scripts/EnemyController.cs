@@ -25,6 +25,7 @@ public class EnemyController : MonoBehaviour
     private GameObject player;
     private PlayerController playerController;
     private Rigidbody2D rb;
+    private Health health;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +36,7 @@ public class EnemyController : MonoBehaviour
         player = GameObject.Find("Player");
         playerController = player.GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody2D>();
+        health = GetComponent<Health>();
     }
 
     void ApplyGravity()
@@ -159,6 +161,10 @@ public class EnemyController : MonoBehaviour
 
     private void ChargePlayer()
     {
+        if (!isGrounded)
+        {
+            return;
+        }
         if (!isCharging && timeSinceLastChargeEnd > chargeCooldown)
         {
             var direction = player.transform.position.x - transform.position.x > 0 ? 1 : -1;
@@ -206,13 +212,22 @@ public class EnemyController : MonoBehaviour
 
             new List<RaycastHit2D?> { groundHits, wallHits, ceilingHits }.ForEach(hit =>
             {
-                if (hit != null && hit.Value.collider.gameObject.GetComponent<Health>() != null)
+                if (
+                    hit != null
+                    && hit.Value.collider.gameObject.GetComponent<Health>() != null
+                        & hit.Value.collider.gameObject.name != "Boss"
+                )
                 {
-                    hit.Value.collider.gameObject.GetComponent<Health>().TakeDamage(3);
+                    hit.Value.collider.gameObject.GetComponent<Health>().TakeDamage(1);
+                    if (hit.Value.collider.gameObject.CompareTag("Enemies"))
+                    {
+                        health.TakeDamage(1);
+                    }
                 }
             });
         }
         animator.SetBool("is_charging", isCharging);
+        animator.SetBool("is_grounded", isGrounded);
         timeSinceLastChargeEnd += Time.deltaTime;
     }
 

@@ -44,10 +44,8 @@ public class PlayerController : MonoBehaviour
     void HandleInputs() {
         if (!mouseController.isHeld) {
             if (Input.GetKey(KeyCode.A)) {
-                Debug.Log("A key is pressed");
                 velocity.x = -runSpeed;
             } else if (Input.GetKey(KeyCode.D)) {
-                Debug.Log("D key is pressed");
                 velocity.x = runSpeed;
             } else {
                 velocity.x = 0;
@@ -88,6 +86,7 @@ public class PlayerController : MonoBehaviour
             if (hit.collider != null) {
                 isGrounded = true;
                 velocity.y = Mathf.Max(0, velocity.y);
+                transform.position = new Vector2(transform.position.x, hit.point.y + boxCollider.bounds.size.y / 2 + groundRaycastDistance);
                 return;
             }
             isGrounded = false;
@@ -100,10 +99,11 @@ public class PlayerController : MonoBehaviour
         Vector2 colliderBottomRight = new Vector2(boxCollider.bounds.max.x, boxCollider.bounds.min.y);
         Vector2 colliderBottomLeft = new Vector2(boxCollider.bounds.min.x, boxCollider.bounds.min.y);
         float originX = colliderBottomRight.x - boxCollider.bounds.size.x / 2;
+        float startY = colliderBottomRight.y + wallRaycastDistance;
 
         if (velocity.x > 0) {
             for (int i = 0; i <= wallRaycastCount; i++) {
-                Vector2 origin = new Vector2(originX, colliderBottomRight.y + (i * (colliderHeight / wallRaycastCount)));
+                Vector2 origin = new Vector2(originX, startY + (i * (colliderHeight / wallRaycastCount)));
                 Debug.DrawRay(origin, Vector2.right * raylength, Color.red);
                 RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.right, raylength, groundLayerMask);
                 if (hit.collider != null) {
@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
             }
         } else if (velocity.x < 0) {
             for (int i = 0; i <= wallRaycastCount; i++) {
-                Vector2 origin = new Vector2(originX, colliderBottomLeft.y + (i * (colliderHeight / wallRaycastCount)));
+                Vector2 origin = new Vector2(originX, startY + (i * (colliderHeight / wallRaycastCount)));
                 Debug.DrawRay(origin, Vector2.left * raylength, Color.red);
                 RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.left, raylength, groundLayerMask);
                 if (hit.collider != null) {

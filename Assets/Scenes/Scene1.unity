@@ -315,6 +315,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1255601424}
+  offset: {x: 4, y: 2, z: -1}
+  speed: 0
 --- !u!1001 &299153090
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -388,7 +390,7 @@ GameObject:
   - component: {fileID: 750969690}
   m_Layer: 6
   m_Name: Foreground
-  m_TagString: Untagged
+  m_TagString: Level
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

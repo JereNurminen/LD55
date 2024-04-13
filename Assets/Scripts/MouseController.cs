@@ -62,7 +62,6 @@ public class MouseController : MonoBehaviour
         }
 
         if (isHeld) {
-            Debug.Log(isReadyToSummon);
             if (isReadyToSummon) {
                 cursorAnimator.SetBool("active", true);
             } else {

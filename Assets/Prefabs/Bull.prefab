@@ -207,6 +207,12 @@ MonoBehaviour:
   visionBlockingLayerMask:
     serializedVersion: 2
     m_Bits: 448
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 896
+  killLayers:
+    serializedVersion: 2
+    m_Bits: 0
   visionRange: 20
   chargeSound: {fileID: 8300000, guid: 345122382898140a49bc2bde41a69c1d, type: 3}
   chargeCooldown: 1

@@ -10,6 +10,8 @@ public class EnemyController : MonoBehaviour
     public float gravity = 9.8f;
     public float groundRaycastDistance = 1 / 16f;
     public LayerMask visionBlockingLayerMask;
+    public LayerMask targetLayers;
+    public LayerMask killLayers;
     public float visionRange = 10.0f;
     public AudioClip chargeSound;
 
@@ -204,7 +206,26 @@ public class EnemyController : MonoBehaviour
         timeSinceLastChargeEnd = chargeCooldown / 2;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) { }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!isAlive)
+        {
+            return;
+        }
+        Debug.Log("Bull collided with " + collision.gameObject.name);
+        var collisionHealth = collision.gameObject.GetComponent<Health>();
+
+        if (targetLayers == (targetLayers | (1 << collision.gameObject.layer)))
+        {
+            collisionHealth.TakeDamage(1);
+        }
+
+        if (killLayers == (killLayers | (1 << collision.gameObject.layer)))
+        {
+            health.TakeDamage(1);
+            onDeath();
+        }
+    }
 
     // Update is called once per frame
     void Update()

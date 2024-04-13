@@ -28,6 +28,10 @@ public class PlayerController : MonoBehaviour
     public GameObject crowPrefab;
     public GameObject ratPrefab;
 
+    public AudioClip deathSound;
+    public AudioClip crowSummonSound;
+    public AudioClip ratSummonSound;
+
     private bool isGrounded = false;
 
     private BoxCollider2D boxCollider;
@@ -182,12 +186,14 @@ public class PlayerController : MonoBehaviour
     {
         GameObject crow = Instantiate(crowPrefab, Start, Quaternion.identity);
         crow.GetComponent<CrowController>().Spawn(Start, Target);
+        AudioSource.PlayClipAtPoint(crowSummonSound, Start);
     }
 
     public void SummonRat(Vector2 Start, Vector2 Target)
     {
         GameObject rat = Instantiate(ratPrefab, Start, Quaternion.identity);
         rat.GetComponent<RatController>().Spawn(Start, Target);
+        AudioSource.PlayClipAtPoint(ratSummonSound, Start);
     }
 
     public void Summon(Vector2 Start, Vector2 Target)
@@ -211,6 +217,7 @@ public class PlayerController : MonoBehaviour
         velocity.y = Mathf.Min(0, velocity.y);
         StartCoroutine(hudController.Die());
         bossController.PowerDown();
+        AudioSource.PlayClipAtPoint(deathSound, transform.position);
     }
 
     // Update is called once per frame

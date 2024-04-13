@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
     public float groundRaycastDistance = 1 / 16f;
     public LayerMask visionBlockingLayerMask;
     public float visionRange = 10.0f;
+    public AudioClip chargeSound;
 
     private Vector2 velocity = Vector2.zero;
     private bool isGrounded = false;
@@ -176,6 +177,7 @@ public class EnemyController : MonoBehaviour
                     + " charging in direction "
                     + chargeDirection
             );
+            AudioSource.PlayClipAtPoint(chargeSound, transform.position);
         }
         velocity.x = chargeDirection * speed;
     }

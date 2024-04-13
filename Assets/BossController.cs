@@ -12,6 +12,7 @@ public class BossController : MonoBehaviour
     public bool isAwake = false;
     public int enrageAtHealth = 3;
     public float spawnIntervalEnraged = 2;
+    public AudioClip onWakeUpSound;
     private Animator animator;
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider;
@@ -46,6 +47,7 @@ public class BossController : MonoBehaviour
     void WakeUp()
     {
         animator.SetTrigger("awake");
+        AudioSource.PlayClipAtPoint(onWakeUpSound, transform.position);
     }
 
     public void OnWakeUpAnimationEnd()

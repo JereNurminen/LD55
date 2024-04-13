@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14d5bab90f8af41ac8dfea085a732e14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: 6
+  hitPoints: 10
   onDeath:
     m_PersistentCalls:
       m_Calls:
@@ -141,6 +141,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onDeathSound: {fileID: 8300000, guid: e100f2bd4e9b340ed9e527a230d3a74b, type: 3}
   onDamage:
     m_PersistentCalls:
       m_Calls:
@@ -156,9 +157,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onDamageSound: {fileID: 8300000, guid: 55026f7dada8b47a1a8ac60cac5dec4f, type: 3}
   onDamageEffectPrefab: {fileID: 6401547085967799255, guid: 0b7e78c34470f451e933429e54cd872a, type: 3}
   isDead: 0
-  isInvulnerable: 0
+  isInvulnerable: 1
 --- !u!114 &4168293987798830823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,13 +173,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85c68397ec4644f239dc503029ac1e43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPositions: []
-  minions: []
-  bossSummoningCirclePrefab: {fileID: 0}
-  spawnInterval: 3
+  spawnPositions:
+  - {x: 48.5, y: -50}
+  - {x: 48.5, y: -45}
+  - {x: 48.5, y: -40}
+  - {x: 38.1, y: -50}
+  - {x: 38.1, y: -40}
+  - {x: 38.1, y: -45}
+  - {x: 43.2, y: -40}
+  - {x: 43.2, y: -45}
+  - {x: 43.2, y: -50}
+  - {x: 53.8, y: -40}
+  - {x: 53.8, y: -45}
+  - {x: 53.8, y: -50}
+  minions:
+  - {fileID: 1755757609235401043, guid: 5875fc76ea0ea49b2ab80859cbc2d5eb, type: 3}
+  bossSummoningCirclePrefab: {fileID: 2504354812240746892, guid: cc0624a7ea74f40fd87c2947977005c6, type: 3}
+  spawnInterval: 2
   isAwake: 0
-  enrageAtHealth: 3
+  enrageAtHealth: 5
   spawnIntervalEnraged: 1
+  onWakeUpSound: {fileID: 8300000, guid: 68b74c7c2b2bc43ae83a67b5c23d2b1d, type: 3}
 --- !u!61 &1424525331303546421
 BoxCollider2D:
   m_ObjectHideFlags: 0

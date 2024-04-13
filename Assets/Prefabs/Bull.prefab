@@ -79,7 +79,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1799718533
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -6276390541757865910, guid: 43e729f8ec21244ae96ed61dcb09889a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -208,6 +208,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 448
   visionRange: 20
+  chargeSound: {fileID: 8300000, guid: 345122382898140a49bc2bde41a69c1d, type: 3}
   chargeCooldown: 1
 --- !u!114 &2811063839400123458
 MonoBehaviour:
@@ -237,6 +238,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onDeathSound: {fileID: 8300000, guid: d7541e3e0d3344f33a55373033cc9762, type: 3}
   onDamage:
     m_PersistentCalls:
       m_Calls:
@@ -252,8 +254,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onDamageSound: {fileID: 8300000, guid: 55026f7dada8b47a1a8ac60cac5dec4f, type: 3}
   onDamageEffectPrefab: {fileID: 6401547085967799255, guid: 0b7e78c34470f451e933429e54cd872a, type: 3}
   isDead: 0
+  isInvulnerable: 0
 --- !u!95 &8692982416064020448
 Animator:
   serializedVersion: 7

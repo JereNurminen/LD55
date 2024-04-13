@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BossSummonController : MonoBehaviour
 {
+    public AudioClip spawnSound;
     private Animator animator;
     private GameObject minionToSpawn;
     private Vector2 spawnPosition;
@@ -31,6 +32,7 @@ public class BossSummonController : MonoBehaviour
     {
         minionToSpawn = minion;
         spawnPosition = startPosition;
+        AudioSource.PlayClipAtPoint(spawnSound, spawnPosition);
     }
 
     void FadeOut()

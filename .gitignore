@@ -73,3 +73,5 @@ crashlytics-build.properties
 
 /aseprite
 .DS_Store
+.idea/
+.vscode/

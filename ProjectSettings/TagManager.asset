@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Destructible
   - Level
+  - Enemies
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - Level
   - Player
   - Destructible
-  - 
+  - Enemies
   - 
   - 
   - 
@@ -43,11 +44,17 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 2400982431
+    locked: 0
   - name: Level
     uniqueID: 4028733077
     locked: 0
   - name: Player
     uniqueID: 543317671
+    locked: 0
+  - name: Enemies
+    uniqueID: 2495248763
     locked: 0
   - name: Summons
     uniqueID: 1055719477
@@ -57,4 +64,7 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 3770201191
+    locked: 0
+  - name: Items
+    uniqueID: 440872715
     locked: 0

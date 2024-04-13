@@ -28,15 +28,18 @@ public class CrowController : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
-        Debug.Log("Collision");
+        Debug.Log(collision.gameObject.tag);
         if (collision.gameObject.CompareTag("Destructible")) {
             Debug.Log("Crow hit a crate");
             collision.gameObject.GetComponent<CrateController>().Break();
-            Despawn();
+            OnHit();
+        } else if (collision.gameObject.CompareTag("Level")) {
+            Debug.Log("Crow hit the level");
+            OnHit();
         }
     }
 
-    private void Despawn() {
+    private void OnHit() {
         animator.SetTrigger("despawn");
         collider.enabled = false;   
     }

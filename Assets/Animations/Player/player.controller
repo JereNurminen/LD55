@@ -67,6 +67,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 3
     m_ConditionEvent: vertical_speed
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: grounded
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8788986133508866175}
   m_Solo: 0

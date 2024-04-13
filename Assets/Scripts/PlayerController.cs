@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rigidBody;
     private Animator animator;
     private MouseController mouseController;
+    private CollisionDetection collisionDetection;
     private float timeSinceJump = 0.0f;
     
 
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         mouseController = GetComponent<MouseController>();
+        collisionDetection = GetComponent<CollisionDetection>();
     }
 
     /* Handle Inputs */
@@ -74,53 +76,20 @@ public class PlayerController : MonoBehaviour
     }
 
     void CheckForGround() {
-        Vector2 colliderBottomLeft = new Vector2(boxCollider.bounds.min.x, boxCollider.bounds.center.y);
-        float raylength = boxCollider.bounds.size.y / 2 + groundRaycastDistance;
-        float colliderWidth = boxCollider.bounds.size.x;
-
-        // This actually draws one more ray than defined in groundRaycastCount, don't care about fixing it rn
-        for (int i = 0; i <= groundRaycastCount; i++) {
-            Vector2 origin = new Vector2(colliderBottomLeft.x + (i * ( colliderWidth / groundRaycastCount )), colliderBottomLeft.y);
-            Debug.DrawRay(origin, Vector2.down * raylength, Color.red);
-            RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, raylength, groundLayerMask);
-            if (hit.collider != null) {
-                isGrounded = true;
-                velocity.y = Mathf.Max(0, velocity.y);
-                transform.position = new Vector2(transform.position.x, hit.point.y + boxCollider.bounds.size.y / 2 + groundRaycastDistance);
-                return;
-            }
+        var hit = collisionDetection.CheckForGround();
+        if (hit != null) {
+            isGrounded = true;
+            velocity.y = Mathf.Max(0, velocity.y);
+            transform.position = new Vector2(transform.position.x, hit.Value.point.y + boxCollider.bounds.size.y / 2 + groundRaycastDistance);
+        } else {
             isGrounded = false;
         }
     }
 
     void CheckForWalls() {
-        float raylength = boxCollider.bounds.size.x / 2 + wallRaycastDistance;
-        float colliderHeight = boxCollider.bounds.size.y;
-        Vector2 colliderBottomRight = new Vector2(boxCollider.bounds.max.x, boxCollider.bounds.min.y);
-        Vector2 colliderBottomLeft = new Vector2(boxCollider.bounds.min.x, boxCollider.bounds.min.y);
-        float originX = colliderBottomRight.x - boxCollider.bounds.size.x / 2;
-        float startY = colliderBottomRight.y + wallRaycastDistance;
-
-        if (velocity.x > 0) {
-            for (int i = 0; i <= wallRaycastCount; i++) {
-                Vector2 origin = new Vector2(originX, startY + (i * (colliderHeight / wallRaycastCount)));
-                Debug.DrawRay(origin, Vector2.right * raylength, Color.red);
-                RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.right, raylength, groundLayerMask);
-                if (hit.collider != null) {
-                    velocity.x = 0;
-                    return;
-                }
-            }
-        } else if (velocity.x < 0) {
-            for (int i = 0; i <= wallRaycastCount; i++) {
-                Vector2 origin = new Vector2(originX, startY + (i * (colliderHeight / wallRaycastCount)));
-                Debug.DrawRay(origin, Vector2.left * raylength, Color.red);
-                RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.left, raylength, groundLayerMask);
-                if (hit.collider != null) {
-                    velocity.x = 0;
-                    return;
-                }
-            }
+        var hit = collisionDetection.CheckForWalls(velocity.x);
+        if (hit != null) {
+            velocity.x = 0;
         }
     }
 

@@ -248,6 +248,9 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 320
+  wallLayerMask:
+    serializedVersion: 2
+    m_Bits: 320
   groundRaycastCount: 2
   groundRaycastDistance: 0.0625
   wallRaycastCount: 2

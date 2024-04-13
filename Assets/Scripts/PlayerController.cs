@@ -185,6 +185,7 @@ public class PlayerController : MonoBehaviour
         isAlive = false;
         animator.SetTrigger("death");
         velocity.x = 0;
+        velocity.y = Mathf.Min(0, velocity.y);
     }
 
     // Update is called once per frame

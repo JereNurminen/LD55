@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Callbacks;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class EnemyController : MonoBehaviour
 {
@@ -23,6 +25,7 @@ public class EnemyController : MonoBehaviour
     private Animator animator;
     private GameObject player;
     private PlayerController playerController;
+    private Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +35,7 @@ public class EnemyController : MonoBehaviour
         animator = GetComponent<Animator>();
         player = GameObject.Find("Player");
         playerController = player.GetComponent<PlayerController>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void ApplyGravity()
@@ -78,7 +82,8 @@ public class EnemyController : MonoBehaviour
         {
             velocity.x = 0;
             var hitHealth = hit.Value.collider.gameObject.GetComponent<Health>();
-            if (isCharging && hitHealth != null) {
+            if (isCharging && hitHealth != null)
+            {
                 hitHealth.TakeDamage(1);
             }
             StopCharging();
@@ -88,7 +93,6 @@ public class EnemyController : MonoBehaviour
 
     void ApplyVelocity()
     {
-        // Apply the velocity to the player
         transform.Translate(velocity * Time.deltaTime);
         if (velocity.x < 0)
         {
@@ -117,36 +121,41 @@ public class EnemyController : MonoBehaviour
             visionBlockingLayerMask
         );
 
-        if (topHit.collider != null || bottomHit.collider != null) {
-            if (topHit.collider.gameObject.CompareTag("Player"))
-            {
-                Debug.DrawLine(transform.position, playerTop, Color.red);
-                return true;
-            }
-            if (bottomHit.collider.gameObject.CompareTag("Player"))
-            {
-                Debug.DrawLine(transform.position, playerBottom, Color.red);
-                return true;
-            }
-            Debug.DrawLine(transform.position, topHit.point, Color.green);
-            Debug.DrawLine(transform.position, bottomHit.point, Color.green);
-            return false;
+        if (topHit.collider != null && topHit.collider.gameObject.CompareTag("Player"))
+        {
+            Debug.DrawLine(transform.position, playerTop, Color.red);
+            return true;
+        }
+        else if (topHit.collider != null)
+        {
+            Debug.DrawLine(transform.position, topHit.point, Color.blue);
         }
         else
         {
-            Debug.DrawRay(
-                transform.position,
-                (player.transform.position - transform.position).normalized * visionRange,
-                Color.green
-            );
-            return false;
+            Debug.DrawLine(transform.position, playerTop, Color.green);
         }
+        if (bottomHit.collider != null && bottomHit.collider.gameObject.CompareTag("Player"))
+        {
+            Debug.DrawLine(transform.position, playerBottom, Color.red);
+            return true;
+        }
+        else if (bottomHit.collider != null)
+        {
+            Debug.DrawLine(transform.position, bottomHit.point, Color.blue);
+        }
+        else
+        {
+            Debug.DrawLine(transform.position, playerBottom, Color.green);
+        }
+        return false;
     }
 
     public void onDeath()
     {
         animator.SetTrigger("die");
         isAlive = false;
+        rb.bodyType = RigidbodyType2D.Static;
+        //boxCollider.enabled = false;
     }
 
     private void ChargePlayer()
@@ -174,18 +183,16 @@ public class EnemyController : MonoBehaviour
         timeSinceLastChargeEnd = chargeCooldown / 2;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-    }
+    private void OnCollisionEnter2D(Collision2D collision) { }
 
     // Update is called once per frame
     void Update()
     {
         var groundHits = CheckForGround();
+        var wallHits = CheckForWalls();
+        var ceilingHits = CheckForCeiling();
         if (isAlive)
         {
-            var wallHits = CheckForWalls();
-            var ceilingHits = CheckForCeiling();
             CanSeePlayer();
 
             if (CanSeePlayer() && playerController.isAlive)
@@ -195,7 +202,7 @@ public class EnemyController : MonoBehaviour
 
             new List<RaycastHit2D?> { groundHits, wallHits, ceilingHits }.ForEach(hit =>
             {
-                if (hit != null && hit.Value.collider.gameObject.GetComponent<Health>() != null) 
+                if (hit != null && hit.Value.collider.gameObject.GetComponent<Health>() != null)
                 {
                     hit.Value.collider.gameObject.GetComponent<Health>().TakeDamage(1);
                 }

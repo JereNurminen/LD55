@@ -274,7 +274,6 @@ GameObject:
   - component: {fileID: 750969692}
   - component: {fileID: 750969691}
   - component: {fileID: 750969690}
-  - component: {fileID: 750969693}
   m_Layer: 6
   m_Name: Foreground
   m_TagString: Level
@@ -4821,28 +4820,6 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
---- !u!95 &750969693
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 750969686}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5b6f01dc505404046a7e094345d1fdd1, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1236866380
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13433,6 +13410,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8468787846369807125, guid: b00b5e787729d4c3f9d188e5bda95958, type: 3}
+      propertyPath: wallLayerMask.m_Bits
+      value: 320
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13489,6 +13470,22 @@ PrefabInstance:
     - target: {fileID: 1935764661352566160, guid: 5875fc76ea0ea49b2ab80859cbc2d5eb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4513844238512731044, guid: 5875fc76ea0ea49b2ab80859cbc2d5eb, type: 3}
+      propertyPath: m_Size.y
+      value: 1.8267428
+      objectReference: {fileID: 0}
+    - target: {fileID: 4513844238512731044, guid: 5875fc76ea0ea49b2ab80859cbc2d5eb, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.16273695
+      objectReference: {fileID: 0}
+    - target: {fileID: 5915215295956520617, guid: 5875fc76ea0ea49b2ab80859cbc2d5eb, type: 3}
+      propertyPath: wallLayerMask.m_Bits
+      value: 448
+      objectReference: {fileID: 0}
+    - target: {fileID: 5915215295956520617, guid: 5875fc76ea0ea49b2ab80859cbc2d5eb, type: 3}
+      propertyPath: groundLayerMask.m_Bits
+      value: 320
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

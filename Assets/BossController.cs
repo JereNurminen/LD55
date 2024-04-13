@@ -17,6 +17,7 @@ public class BossController : MonoBehaviour
     private BoxCollider2D boxCollider;
     private Health health;
     private float timeSinceLastSpawn = 0f;
+    private HudController hudController;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,7 @@ public class BossController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         health = GetComponent<Health>();
+        hudController = FindAnyObjectByType<HudController>();
     }
 
     private void SpawnRandomMinionFromRandomCircle()
@@ -79,6 +81,7 @@ public class BossController : MonoBehaviour
         {
             enemy.GetComponent<Health>().SetHealth(0);
         }
+        StartCoroutine(hudController.Win());
     }
 
     public void PowerDown()

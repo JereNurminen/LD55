@@ -220,13 +220,6 @@ public class PlayerController : MonoBehaviour
         {
             HandleInputs();
         }
-        else if (Input.GetKeyDown(KeyCode.R))
-        {
-            // Reload current Scene
-            UnityEngine.SceneManagement.SceneManager.LoadScene(
-                UnityEngine.SceneManagement.SceneManager.GetActiveScene().name
-            );
-        }
         CheckForGround();
         CheckForWalls();
         CheckForCeiling();

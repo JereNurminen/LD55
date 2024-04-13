@@ -89,12 +89,12 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         HandleInputs();
-        timeSinceJump += Time.deltaTime;
+        CheckForGround();
     }
 
     void FixedUpdate() {
         ApplyGravity();
         ApplyVelocity();
-        CheckForGround();
+        timeSinceJump += Time.deltaTime;
     }
 }

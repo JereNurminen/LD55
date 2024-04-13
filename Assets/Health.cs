@@ -8,6 +8,7 @@ public class Health : MonoBehaviour
 {
     public int hitPoints = 3;
     public UnityEvent onDeath;
+    public UnityEvent onDamage;
     private bool isDead = false;
 
     // Start is called before the first frame update
@@ -18,6 +19,7 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int damage) {
         hitPoints -= damage;
+        onDamage.Invoke();
         if (hitPoints <= 0 && !isDead) {
             onDeath.Invoke();
             isDead = true;

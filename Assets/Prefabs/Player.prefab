@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8769702891177251215}
   - component: {fileID: 5312584364504923604}
   - component: {fileID: 8468787846369807125}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravity: 20
   runSpeed: 10
-  jumpStrength: 5
+  jumpStrength: 7
   groundRaycastDistance: 0.0625
   wallRaycastDistance: 0.125
   groundRaycastCount: 2

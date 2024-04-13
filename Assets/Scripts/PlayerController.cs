@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -15,6 +16,8 @@ public class PlayerController : MonoBehaviour
     public int groundRaycastCount = 2;
     public LayerMask groundLayerMask;
     public float gravityImmunityAfterJump = 0.1f;
+
+    public GameObject crowPrefab;
 
     private bool isGrounded = false;
 
@@ -83,6 +86,11 @@ public class PlayerController : MonoBehaviour
     void ApplyVelocity() {
         // Apply the velocity to the player
         transform.Translate(velocity * Time.deltaTime);
+    }
+
+    public void SummonCrow(Vector2 Start, Vector2 Target) {
+        GameObject crow = Instantiate(crowPrefab, Start, Quaternion.identity);
+        crow.GetComponent<CrowController>().Spawn(Start, Target);
     }
 
     // Update is called once per frame

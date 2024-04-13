@@ -119,7 +119,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onDeathSound: {fileID: 0}
+  onDeathSound: {fileID: 8300000, guid: d7541e3e0d3344f33a55373033cc9762, type: 3}
   onDamage:
     m_PersistentCalls:
       m_Calls:
@@ -135,7 +135,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onDamageSound: {fileID: 0}
+  onDamageSound: {fileID: 8300000, guid: 55026f7dada8b47a1a8ac60cac5dec4f, type: 3}
   onDamageEffectPrefab: {fileID: 6401547085967799255, guid: 0b7e78c34470f451e933429e54cd872a, type: 3}
   isDead: 0
   isInvulnerable: 0
@@ -215,6 +215,7 @@ MonoBehaviour:
   killLayers:
     serializedVersion: 2
     m_Bits: 960
+  attackSound: {fileID: 8300000, guid: 345122382898140a49bc2bde41a69c1d, type: 3}
 --- !u!61 &5209445446238209309
 BoxCollider2D:
   m_ObjectHideFlags: 0

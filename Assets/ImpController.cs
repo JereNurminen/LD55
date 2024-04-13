@@ -13,6 +13,7 @@ public class ImpController : MonoBehaviour
 
     public LayerMask targetLayers;
     public LayerMask killLayers;
+    public AudioClip attackSound;
 
     private Health health;
     private GameObject player;
@@ -56,6 +57,7 @@ public class ImpController : MonoBehaviour
     {
         isAwake = true;
         movement = (player.transform.position - transform.position).normalized * speed;
+        AudioSource.PlayClipAtPoint(attackSound, transform.position);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

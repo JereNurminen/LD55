@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
     private SelectedSummon selectedSummon = SelectedSummon.Crow;
     private HudController hudController;
+    private Vector2 lastPos;
 
     // Start is called before the first frame update
     void Start()
@@ -122,13 +123,28 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void CheckForWalls()
+    RaycastHit2D? CheckForWalls()
     {
         var hit = collisionDetection.CheckForWalls(velocity.x);
         if (hit != null)
         {
+            if (velocity.x > 0)
+            {
+                transform.position = new Vector2(
+                    hit.Value.point.x - boxCollider.bounds.size.x / 2 - wallRaycastDistance,
+                    transform.position.y
+                );
+            }
+            else
+            {
+                transform.position = new Vector2(
+                    hit.Value.point.x + boxCollider.bounds.size.x / 2 + wallRaycastDistance,
+                    transform.position.y
+                );
+            }
             velocity.x = 0;
         }
+        return hit;
     }
 
     void CheckForCeiling()
@@ -143,6 +159,11 @@ public class PlayerController : MonoBehaviour
 
     void ApplyVelocity()
     {
+        var hits = CheckForWalls();
+        if (hits != null)
+        {
+            velocity.x = 0;
+        }
         // Apply the velocity to the player
         transform.Translate(velocity * Time.deltaTime);
         if (velocity.x < 0)
@@ -206,7 +227,8 @@ public class PlayerController : MonoBehaviour
         CheckForGround();
         CheckForWalls();
         CheckForCeiling();
-        animator.SetBool("running", !Mathf.Approximately(velocity.x, 0f));
+
+        //animator.SetBool("running", !Mathf.Approximately(velocity.x, 0f));
         animator.SetFloat("vertical_speed", velocity.y);
         animator.SetBool("grounded", isGrounded);
         animator.SetBool("summoning", mouseController.isHeld);
@@ -217,5 +239,7 @@ public class PlayerController : MonoBehaviour
         ApplyGravity();
         ApplyVelocity();
         timeSinceJump += Time.deltaTime;
+        animator.SetBool("running", Mathf.Abs(((Vector2)transform.position - lastPos).x) > 1 / 8);
+        lastPos = transform.position;
     }
 }

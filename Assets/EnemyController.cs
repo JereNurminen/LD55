@@ -12,12 +12,14 @@ public class EnemyController : MonoBehaviour
     private bool isGrounded = false;
     private BoxCollider2D boxCollider;
     private CollisionDetection collisionDetection; 
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
         boxCollider = GetComponent<BoxCollider2D>();
         collisionDetection = GetComponent<CollisionDetection>();
+        animator = GetComponent<Animator>();
     }
 
     void ApplyGravity() {
@@ -29,7 +31,6 @@ public class EnemyController : MonoBehaviour
     void CheckForGround() {
         var hit = collisionDetection.CheckForGround();
         if (hit != null) {
-            Debug.Log(hit.Value.collider.gameObject.name);
             isGrounded = true;
             velocity.y = Mathf.Max(0, velocity.y);
             transform.position = new Vector2(transform.position.x, hit.Value.point.y + boxCollider.bounds.size.y / 2 + groundRaycastDistance);
@@ -55,6 +56,9 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public void onDeath() {
+    animator.SetTrigger("die");
+    }
 
     // Update is called once per frame
     void Update()

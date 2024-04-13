@@ -6,6 +6,7 @@ using UnityEngine;
 public class CrowController : MonoBehaviour
 {
     public float speed = 1.0f;
+    public int damage = 1;
     private Vector2 startPosition;
     private Vector2 targetPosition;
     private Vector2 movement;
@@ -30,17 +31,19 @@ public class CrowController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision) {
         Debug.Log(collision.gameObject.tag);
         if (collision.gameObject.CompareTag("Destructible")) {
-            Debug.Log("Crow hit a crate");
             collision.gameObject.GetComponent<CrateController>().Break();
             OnHit();
         } else if (collision.gameObject.CompareTag("Level")) {
-            Debug.Log("Crow hit the level");
+            OnHit();
+        } else if (collision.gameObject.CompareTag("Enemies")) {
+            collision.gameObject.GetComponent<Health>().TakeDamage(1);
             OnHit();
         }
     }
 
     private void OnHit() {
         animator.SetTrigger("despawn");
+        movement = Vector2.zero;
         collider.enabled = false;   
     }
 

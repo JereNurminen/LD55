@@ -93,6 +93,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void CheckForCeiling() {
+        var hit = collisionDetection.CheckForCeiling();
+        if (hit != null) {
+            velocity.y = 0;
+            timeSinceJump = gravityImmunityAfterJump + 0.1f;
+        }
+    }
+
     void ApplyVelocity() {
         // Apply the velocity to the player
         transform.Translate(velocity * Time.deltaTime);
@@ -114,6 +122,7 @@ public class PlayerController : MonoBehaviour
         HandleInputs();
         CheckForGround();
         CheckForWalls();
+        CheckForCeiling();
         animator.SetBool("running", !Mathf.Approximately(velocity.x, 0f));
         animator.SetFloat("vertical_speed", velocity.y);
         animator.SetBool("grounded", isGrounded);

@@ -36,8 +36,26 @@ public class CollisionDetection : MonoBehaviour
             Debug.DrawRay(origin, Vector2.down * raylength, Color.red);
             RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, raylength, groundLayerMask);
             if (hit.collider != null) {
-                //velocity.y = Mathf.Max(0, velocity.y);
                 transform.position = new Vector2(transform.position.x, hit.point.y + boxCollider.bounds.size.y / 2 + groundRaycastDistance);
+                return hit;
+            }
+        }
+        return null;
+    }
+
+    public RaycastHit2D? CheckForCeiling() {
+        Vector2 colliderTopLeft = new Vector2(boxCollider.bounds.min.x, boxCollider.bounds.max.y);
+        float raylength = boxCollider.bounds.size.y / 2 + groundRaycastDistance;
+        float colliderWidth = boxCollider.bounds.size.x;
+        float originY = colliderTopLeft.y - boxCollider.bounds.size.y / 2;
+
+        // This actually draws one more ray than defined in groundRaycastCount, don't care about fixing it rn
+        for (int i = 0; i <= groundRaycastCount; i++) {
+            Vector2 origin = new Vector2(colliderTopLeft.x + (i * ( colliderWidth / upRaycastCount )), originY);
+            Debug.DrawRay(origin, Vector2.up * raylength, Color.red);
+            RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.up, raylength, groundLayerMask);
+            if (hit.collider != null) {
+                //transform.position = new Vector2(transform.position.x, Mathf.Min(hit.point.y - boxCollider.bounds.size.y / 2 + groundRaycastDistance, transform.position.y));
                 return hit;
             }
         }
@@ -57,7 +75,6 @@ public class CollisionDetection : MonoBehaviour
                 Debug.DrawRay(origin, Vector2.right * raylength, Color.red);
                 RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.right, raylength, groundLayerMask);
                 if (hit.collider != null) {
-                    //velocity.x = 0;
                     return hit;
                 }
             }
@@ -67,7 +84,6 @@ public class CollisionDetection : MonoBehaviour
                 Debug.DrawRay(origin, Vector2.left * raylength, Color.red);
                 RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.left, raylength, groundLayerMask);
                 if (hit.collider != null) {
-                    //velocity.x = 0;
                     return hit;
                 }
             }

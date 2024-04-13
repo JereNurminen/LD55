@@ -13,7 +13,9 @@ public class PlayerController : MonoBehaviour
     public float jumpStrength = 100.0f;
 
     public float groundRaycastDistance = 1 / 8f;
+    public float wallRaycastDistance = 1 / 8f;
     public int groundRaycastCount = 2;
+    public int wallRaycastCount = 3;
     public LayerMask groundLayerMask;
     public float gravityImmunityAfterJump = 0.1f;
 
@@ -83,6 +85,36 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void CheckForWalls() {
+        float raylength = boxCollider.bounds.size.x / 2 + wallRaycastDistance;
+        float colliderHeight = boxCollider.bounds.size.y;
+        Vector2 colliderBottomRight = new Vector2(boxCollider.bounds.max.x, boxCollider.bounds.min.y);
+        Vector2 colliderBottomLeft = new Vector2(boxCollider.bounds.min.x, boxCollider.bounds.min.y);
+        float originX = colliderBottomRight.x - boxCollider.bounds.size.x / 2;
+
+        if (velocity.x > 0) {
+            for (int i = 0; i <= wallRaycastCount; i++) {
+                Vector2 origin = new Vector2(originX, colliderBottomRight.y + (i * (colliderHeight / wallRaycastCount)));
+                Debug.DrawRay(origin, Vector2.right * raylength, Color.red);
+                RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.right, raylength, groundLayerMask);
+                if (hit.collider != null) {
+                    velocity.x = 0;
+                    return;
+                }
+            }
+        } else if (velocity.x < 0) {
+            for (int i = 0; i <= wallRaycastCount; i++) {
+                Vector2 origin = new Vector2(originX, colliderBottomLeft.y + (i * (colliderHeight / wallRaycastCount)));
+                Debug.DrawRay(origin, Vector2.left * raylength, Color.red);
+                RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.left, raylength, groundLayerMask);
+                if (hit.collider != null) {
+                    velocity.x = 0;
+                    return;
+                }
+            }
+        }
+    }
+
     void ApplyVelocity() {
         // Apply the velocity to the player
         transform.Translate(velocity * Time.deltaTime);
@@ -98,6 +130,7 @@ public class PlayerController : MonoBehaviour
     {
         HandleInputs();
         CheckForGround();
+        CheckForWalls();
     }
 
     void FixedUpdate() {

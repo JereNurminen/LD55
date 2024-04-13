@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1669200138234714840}
   - component: {fileID: 8473227717245733928}
   - component: {fileID: 6681980401065717676}
+  - component: {fileID: 1880832415200541286}
   m_Layer: 0
   m_Name: Crow
   m_TagString: Untagged
@@ -104,7 +105,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   damage: 1
-  onHitEffectPrefab: {fileID: 6401547085967799255, guid: 0b7e78c34470f451e933429e54cd872a, type: 3}
 --- !u!95 &1669200138234714840
 Animator:
   serializedVersion: 7
@@ -200,3 +200,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.5, y: 0.19102359}
   m_EdgeRadius: 0
+--- !u!114 &1880832415200541286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951377847551863843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 528ff8555882c41ea965ab7e548e6b4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  damage: 1

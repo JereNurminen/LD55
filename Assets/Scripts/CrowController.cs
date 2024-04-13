@@ -13,6 +13,7 @@ public class CrowController : MonoBehaviour
     private Animator animator;
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider;
+    private SummonController summonController;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,12 @@ public class CrowController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
+        summonController = GetComponent<SummonController>();
+    }
+
+    public void Spawn(Vector2 startPosition, Vector2 targetPosition) {
+        summonController = GetComponent<SummonController>();
+        summonController.Spawn(startPosition, targetPosition);
     }
 
     // Update is called once per frame
@@ -28,33 +35,5 @@ public class CrowController : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
-        Debug.Log(collision.gameObject.tag);
-        var health = collision.gameObject.GetComponent<Health>();
-        OnHit();
-
-        if (health != null) {
-            health.TakeDamage(1, collision.GetContact(0).point);
-        }
-    }
-
-    private void OnHit() {
-        animator.SetTrigger("despawn");
-        movement = Vector2.zero;
-        boxCollider.enabled = false;   
-    }
-
-    public void OnDespawnAnimationEnd() {
-        Destroy(gameObject);
-    }
-
-    public void Spawn(Vector2 startPosition, Vector2 targetPosition) {
-        this.startPosition = startPosition;
-        this.targetPosition = targetPosition;
-        movement = ( targetPosition - startPosition).normalized * speed;
-    }
-
-    void FixedUpdate() {
-        rb.MovePosition(rb.position + movement * Time.deltaTime);
-    }
+ 
 }

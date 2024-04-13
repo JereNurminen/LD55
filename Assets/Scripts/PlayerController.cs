@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public float gravityImmunityAfterJump = 0.1f;
 
     public GameObject crowPrefab;
+    public GameObject ratPrefab;
 
     private bool isGrounded = false;
 
@@ -113,9 +114,15 @@ public class PlayerController : MonoBehaviour
         crow.GetComponent<CrowController>().Spawn(Start, Target);
     }
 
+    public void SummonRat(Vector2 Start, Vector2 Target) {
+        GameObject rat = Instantiate(ratPrefab, Start, Quaternion.identity);
+        rat.GetComponent<RatController>().Spawn(Start, Target);
+    }
+
     public void onDeath() {
         isAlive = false;
         animator.SetTrigger("death");
+        velocity.x = 0;
     }
 
     // Update is called once per frame

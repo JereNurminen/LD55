@@ -41,6 +41,10 @@ public class MouseController : MonoBehaviour
     void SummonCrow() {
         GetComponentInParent<PlayerController>().SummonCrow(spawnWorldPosition, targetWorldPosition);
     }
+    void SummonRat() {
+        GetComponentInParent<PlayerController>().SummonRat(spawnWorldPosition, targetWorldPosition);
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -57,7 +61,7 @@ public class MouseController : MonoBehaviour
             isHeld = false;
             summoningCircle.GetComponent<SummoningController>().Despawn();
             if (isReadyToSummon) {
-                SummonCrow();
+                SummonRat();
             }
         }
 

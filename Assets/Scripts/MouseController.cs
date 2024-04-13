@@ -5,6 +5,8 @@ using UnityEngine;
 public class MouseController : MonoBehaviour
 {
 
+    public float minimumSummonDistance = 1.0f;
+    private bool isReadyToSummon = false;
     public Texture2D cursorTexture;
     public Vector2 cursorHotspot;
     public CursorMode cursorMode = CursorMode.Auto;
@@ -45,21 +47,29 @@ public class MouseController : MonoBehaviour
     {
         targetWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         cursor.transform.position = targetWorldPosition;
+        isReadyToSummon = Vector2.Distance(spawnWorldPosition, targetWorldPosition) > minimumSummonDistance;
 
         if (Input.GetMouseButtonDown(0)) {
             isHeld = true;
             spawnWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             summoningCircle = Instantiate(summoningCirclePrefab, spawnWorldPosition, Quaternion.identity);
-            cursorAnimator.SetTrigger("activate");
         } else if (Input.GetMouseButtonUp(0)) {
             isHeld = false;
             summoningCircle.GetComponent<SummoningController>().Despawn();
-            SummonCrow();
-            cursorAnimator.SetTrigger("deactivate");
+            if (isReadyToSummon) {
+                SummonCrow();
+            }
         }
 
         if (isHeld) {
-            Debug.DrawLine(spawnWorldPosition, targetWorldPosition, Color.red);
+            Debug.Log(isReadyToSummon);
+            if (isReadyToSummon) {
+                cursorAnimator.SetBool("active", true);
+            } else {
+                cursorAnimator.SetBool("active", false);
+            }
+        } else {
+            cursorAnimator.SetBool("active", false);
         }
     }
 }

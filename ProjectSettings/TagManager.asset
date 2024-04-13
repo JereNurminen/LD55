@@ -48,3 +48,12 @@ TagManager:
   - name: Player
     uniqueID: 543317671
     locked: 0
+  - name: Summons
+    uniqueID: 1055719477
+    locked: 0
+  - name: Effects
+    uniqueID: 3857122921
+    locked: 0
+  - name: UI
+    uniqueID: 3770201191
+    locked: 0

@@ -199,8 +199,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5a9414d235740a4a83a8030867d6e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursorTexture: {fileID: 2800000, guid: b2d8faccf8e6f4ca5b5629497c0f18fd, type: 3}
+  minimumSummonDistance: 0.5
+  cursorTexture: {fileID: 0}
   cursorHotspot: {x: 5, y: 8}
   cursorMode: 1
-  summoningCirclePrefab: {fileID: 0}
-  summoningTargetPrefab: {fileID: 0}
+  summoningCirclePrefab: {fileID: 2657160887170793571, guid: b6bd617d4b3a741cd883144255dba868, type: 3}
+  summoningTargetPrefab: {fileID: 2757959419550835708, guid: fba1a8afe0ba442569c9028d40cc9a8c, type: 3}

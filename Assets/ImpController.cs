@@ -72,7 +72,10 @@ public class ImpController : MonoBehaviour
             collisionHealth.TakeDamage(1);
         }
 
-        if (killLayers == (killLayers | (1 << collision.gameObject.layer)))
+        if (
+            killLayers == (killLayers | (1 << collision.gameObject.layer))
+            && (collisionHealth == null || !collisionHealth.isDead)
+        )
         {
             health.TakeDamage(1);
             OnDeath();

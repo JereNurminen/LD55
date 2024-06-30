@@ -62,11 +62,24 @@ public class MouseController : MonoBehaviour
         else if (Input.GetMouseButtonUp(0))
         {
             isHeld = false;
-            summoningCircle.GetComponent<SummoningController>().Despawn();
             if (isReadyToSummon)
             {
+                Quaternion spawnDirection = Quaternion.Euler(
+                    0,
+                    0,
+                    Mathf.Atan2(
+                        targetWorldPosition.y - spawnWorldPosition.y,
+                        targetWorldPosition.x - spawnWorldPosition.x
+                    ) * Mathf.Rad2Deg
+                        - 90
+                );
                 GetComponentInParent<PlayerController>()
                     .Summon(spawnWorldPosition, targetWorldPosition);
+                summoningCircle.GetComponent<SummoningController>().Despawn(true, spawnDirection);
+            }
+            else
+            {
+                summoningCircle.GetComponent<SummoningController>().Despawn(false, null);
             }
         }
 
